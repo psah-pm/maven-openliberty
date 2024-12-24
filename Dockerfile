@@ -22,8 +22,8 @@ COPY src/main/liberty/config/server.xml /config/
 # Enable required Liberty features
 RUN /opt/ol/wlp/bin/server featureManager install --acceptLicense --features springBoot-3.0
 
-# Expose ports for HTTP and HTTPS
-EXPOSE 9080 9443
+# Expose ports for HTTP (8081) and HTTPS (9443)
+EXPOSE 8081 9443
 
-# Default command to start Open Liberty
-CMD ["/opt/ol/wlp/bin/server", "run", "defaultServer"]
+# Use ENTRYPOINT to run the application with a custom port
+ENTRYPOINT ["/opt/jboss/container/java/run/run-java.sh", "--server.port=8081"]
