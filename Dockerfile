@@ -23,7 +23,8 @@ COPY src/main/liberty/config/server.xml /config/
 RUN /opt/ol/wlp/bin/server featureManager install --acceptLicense --features springBoot-3.0
 
 # Expose ports for HTTP and HTTPS
-EXPOSE 9080 9443
+# EXPOSE 9080 9443
+EXPOSE 8081
 
 # Default command to start Open Liberty
 CMD ["/opt/ol/wlp/bin/server", "run", "defaultServer"]
