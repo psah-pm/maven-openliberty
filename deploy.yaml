@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: my-java-springboot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-springboot-app
+  template:
+    metadata:
+      labels:
+        app: java-springboot-app
+    spec:
+      containers:
+        - name: my-java-springboot
+          image: java-springboot-image:latest
+          ports:
+            - name: http
+              containerPort: 9080
+              protocol: TCP
+            - name: https
+              containerPort: 9443
+              protocol: TCP
+          resources:
+            requests:
+              memory: "180Mi"
+              cpu: "10m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-java-springboot-svc
+spec:
+  ports:
+    - name: http-9080
+      port: 9080
+      protocol: TCP
+      targetPort: 9080
+    - name: https-9443
+      port: 9443
+      protocol: TCP
+      targetPort: 9443
+  selector:
+    app: java-springboot-app
