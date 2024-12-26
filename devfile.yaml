@@ -1,9 +1,9 @@
 schemaVersion: 2.2.0
 metadata:
-  name: java-springboot
+  name: java-springboot-sample
   version: 1.2.1
   attributes:
-    alpha.dockerimage-port: 8081
+    alpha.dockerimage-port: 8082
   displayName: Spring Boot®
   description: Spring Boot® using Maven
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
@@ -21,7 +21,7 @@ parent:
 components:
   - name: image-build
     image:
-      imageName: java-springboot-image:latest
+      imageName: java-springboot-image:sample
       dockerfile:
         uri: docker/Dockerfile
         buildContext: .
@@ -31,12 +31,12 @@ components:
       deployment/replicas: 1
       deployment/cpuRequest: 10m
       deployment/memoryRequest: 180Mi
-      deployment/container-port: 8081
+      deployment/container-port: 8082
     kubernetes:
       uri: deploy.yaml
       endpoints:
         - name: http-8081
-          targetPort: 8081
+          targetPort: 8082
           path: /
           secure: true
 commands:
