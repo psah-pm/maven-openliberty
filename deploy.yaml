@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         - name: my-java-springboot
-          image: image-registry.openshift-image-registry.svc:5000/pashu8work-dev/openliberty:latest
-          imagePullPolicy: Always
+          image: openliberty:latest
           ports:
             - name: http
               containerPort: 8081
