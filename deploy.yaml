@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: my-java-springboot
-          image: openliberty:latest
+          image: openliberty-dev:latest
           ports:
             - name: http
               containerPort: 8081

@@ -21,7 +21,7 @@ parent:
 components:
   - name: image-build
     image:
-      imageName: java-springboot-image:latest
+      imageName: openliberty-dev:latest
       dockerfile:
         uri: docker/Dockerfile
         buildContext: .
