@@ -3,7 +3,7 @@
         <feature>springBoot-3.0</feature>
     </featureManager>
 
-    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="8081" httpsPort="-1"/>
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="8081" httpsPort="9443"/>
 
     <!-- <application type="springBoot">
         <applicationLocation>/config/apps/demo-0.0.1-SNAPSHOT.jar</applicationLocation>
