@@ -1,6 +1,6 @@
 <server>
     <featureManager>
-        <feature>springBoot-3.0</feature>
+        <feature>springBoot-2.5.0</feature>
         <feature>mpHealth-3.1</feature>
     </featureManager>
 

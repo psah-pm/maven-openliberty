@@ -20,7 +20,7 @@ COPY --from=builder /app/target/demo-0.0.1-SNAPSHOT.jar /config/apps/
 COPY src/main/liberty/config/server.xml /config/
 
 # Enable required Liberty features
-RUN /opt/ol/wlp/bin/server featureManager install --acceptLicense --features springBoot-3.0
+RUN /opt/ol/wlp/bin/server featureManager install --acceptLicense --features springBoot-2.5.0
 
 # Expose ports for HTTP and HTTPS
 EXPOSE 8081
