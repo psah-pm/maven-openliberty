@@ -29,8 +29,8 @@ components:
   - name: kubernetes-deploy
     attributes:
       deployment/replicas: 1
-      deployment/cpuRequest: 10m
-      deployment/memoryRequest: 180Mi
+      deployment/cpuRequest: 500m
+      deployment/memoryRequest: 512Mi
       deployment/container-port: 8081
     kubernetes:
       uri: deploy.yaml
