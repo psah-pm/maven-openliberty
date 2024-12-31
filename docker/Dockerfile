@@ -56,6 +56,8 @@
 # Stage 1: Build the application
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058 AS builder
 
+RUN mkdir -p /var/cache/yum && chmod 777 /var/cache/yum
+
 # Install curl and gzip using microdnf
 RUN microdnf install -y curl gzip
 
