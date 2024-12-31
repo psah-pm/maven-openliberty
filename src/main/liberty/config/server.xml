@@ -1,14 +1,12 @@
 <server>
     <featureManager>
         <feature>springBoot-3.0</feature>
-        <feature>servlet-4.0</feature>
+        <feature>servlet-6.0</feature>
     </featureManager>
 
-    <httpEndpoint id="defaultHttpEndpoint" host="0.0.0.0" httpPort="8081" httpsPort="9443"/>
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="8081" httpsPort="9443"/>
 
-    <!-- <springBootApplication id="spring-boot" 
+    <springBootApplication id="spring-boot" 
                            location="/config/apps/demo-0.0.1-SNAPSHOT.jar"
-                           name="spring-boot" /> -->
-        <application id="MyApp" name="MyApp" location="export-run-artifact.jar" type="war"/>
-
+                           name="spring-boot" />
 </server>
