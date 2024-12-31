@@ -32,8 +32,9 @@
 
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058 AS builder
 
-# Install Maven 3.6+
-RUN dnf -y install maven
+# Install Maven manually using curl
+RUN curl -sL https://dlcdn.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz | tar xz -C /opt && \
+    ln -s /opt/apache-maven-3.8.1/bin/mvn /usr/bin/mvn
 
 # Build dependency offline to streamline build
 RUN mkdir project
