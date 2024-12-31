@@ -53,23 +53,42 @@
 # ENTRYPOINT ["/opt/jboss/container/java/run/run-java.sh", "--server.port=8081"]
 
 
-FROM maven:3.8.1-openjdk-17 AS builder
+# Stage 1: Build the application
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058 AS builder
+
+# Install Maven 3.6 or later
+RUN curl -fsSL https://apache.mirror.digitalpacific.com.au/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -o /tmp/maven.tar.gz && \
+    tar -xzvf /tmp/maven.tar.gz -C /opt && \
+    ln -s /opt/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
+
+# Verify Maven installation
+RUN mvn -v
 
 # Build dependency offline to streamline build
 RUN mkdir project
 WORKDIR /home/jboss/project
-COPY pom.xml .
+COPY pom.xml . 
 RUN mvn dependency:go-offline
 
 COPY src src
 RUN mvn package -Dmaven.test.skip=true
-# Compute the created jar name and put it in a known location to copy to the next layer
-RUN grep version target/maven-archiver/pom.properties | cut -d '=' -f2 > .env-version
-RUN grep artifactId target/maven-archiver/pom.properties | cut -d '=' -f2 > .env-id
+
+# Compute the created jar name and put it in a known location to copy to the next layer.
+RUN grep version target/maven-archiver/pom.properties | cut -d '=' -f2 >.env-version
+RUN grep artifactId target/maven-archiver/pom.properties | cut -d '=' -f2 >.env-id
 RUN mv target/$(cat .env-id)-$(cat .env-version).jar target/export-run-artifact.jar
 
+# Stage 2: Runtime image
 FROM registry.access.redhat.com/ubi8/openjdk-17-runtime:1.15-1.1682053056
-COPY --from=builder /home/jboss/project/target/export-run-artifact.jar  /deployments/export-run-artifact.jar
+
+# Copy the built jar
+COPY --from=builder /home/jboss/project/target/export-run-artifact.jar /deployments/export-run-artifact.jar
+
+# Copy the Liberty configuration
 COPY src/main/liberty/config/server.xml /config/server.xml
+
+# Expose the application port
 EXPOSE 8081
+
+# Run the application
 ENTRYPOINT ["/opt/jboss/container/java/run/run-java.sh", "--server.port=8081"]
