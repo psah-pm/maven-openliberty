@@ -33,7 +33,7 @@
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058 AS builder
 
 # Install Maven 3.6+
-RUN yum -y install maven
+RUN dnf -y install maven
 
 # Build dependency offline to streamline build
 RUN mkdir project
