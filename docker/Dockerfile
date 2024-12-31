@@ -56,15 +56,17 @@
 # Stage 1: Build the application
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058 AS builder
 
-RUN mkdir -p /var/cache/yum && chmod 777 /var/cache/yum
+USER root
 
 # Install curl and gzip using microdnf
 RUN microdnf install -y curl gzip
 
 # Install Maven 3.6 or later from a different mirror
 RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -o /tmp/maven.tar.gz && \
-    tar -xzvf /tmp/maven.tar.gz -C /opt && \
-    ln -s /opt/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
+    tar -xzvf /tmp/maven.tar.gz -C /opt
+
+# Remove existing symlink (if it exists) and create a new one
+RUN rm -f /usr/bin/mvn && ln -s /opt/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
 
 # Verify Maven installation
 RUN mvn -v
