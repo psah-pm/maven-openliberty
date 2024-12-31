@@ -56,6 +56,9 @@
 # Stage 1: Build the application
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.15-1.1682053058 AS builder
 
+# Install curl and gzip using microdnf
+RUN microdnf install -y curl gzip
+
 # Install Maven 3.6 or later from a different mirror
 RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -o /tmp/maven.tar.gz && \
     tar -xzvf /tmp/maven.tar.gz -C /opt && \
